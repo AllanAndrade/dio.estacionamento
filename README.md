@@ -16,7 +16,8 @@
 
 ### Para começar execute
 
-```git clone git@github.com:AllanAndrade/dio.estacionamento.git
+``` 
+git clone git@github.com:AllanAndrade/dio.estacionamento.git
 cd dio.estacionamento
 npm i
 npm start
