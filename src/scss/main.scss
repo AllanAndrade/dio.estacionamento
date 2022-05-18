@@ -1,3 +1,13 @@
 body {
-    background-color: #f00;
+    background-color: #ccc;
+}
+
+table {
+    border-collapse: collapse;
+    tr {
+        td {
+            border: 1px solid #333;
+            padding: 1em;
+        }
+    }
 }

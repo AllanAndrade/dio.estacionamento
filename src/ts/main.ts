@@ -1,3 +1,4 @@
 require('../scss/main.scss');
 
-console.log("Hello!")
+let Tela = require('./Tela');
+Tela.inicio();
