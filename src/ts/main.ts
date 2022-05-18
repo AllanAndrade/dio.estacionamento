@@ -1,3 +1,6 @@
+/**
+ * Arquivo inicial
+ */
 require('../scss/main.scss');
 
 let Tela = require('./Tela');

@@ -1,5 +1,7 @@
 
-
+/**
+ * Objeto veículo
+ */
 module.exports = class Veiculo {
 
     nome: string;

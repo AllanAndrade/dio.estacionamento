@@ -1,4 +1,3 @@
-// const { Veiculo } = require('./Veiculo');
 
 var veiculosNoPatio: any[] = JSON.parse(localStorage.getItem('patio')) || [];
 
@@ -12,8 +11,11 @@ module.exports = class Patio {
         return veiculo_entrou;
     }
 
-    static sair(veiculo: any) {
-        let dhSaida = new Date();
+    static sair(placa: string): any {
+        let veiculo_saiu = veiculosNoPatio.find(veiculo => veiculo.veiculo.placa === placa);
+        veiculosNoPatio = veiculosNoPatio.filter(veiculo => veiculo.veiculo.placa !== placa);
+        localStorage.setItem('patio', JSON.stringify(veiculosNoPatio));
+        return veiculo_saiu;
     }
 
     static getListaPatio() {

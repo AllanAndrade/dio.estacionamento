@@ -1,3 +1,7 @@
+/**
+ * Formata um objeto Data, ou a string de um objeto Data, 
+ * para uma string no formato dd/mm/yyyy hh:mm:ss
+ */
 module.exports = function FormatarDataBR(dh: Date | string): string {
     if (!(dh instanceof Date)) {
         dh = new Date(dh);

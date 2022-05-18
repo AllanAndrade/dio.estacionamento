@@ -1,7 +1,11 @@
+/**
+ * A classe Tela trata de todas as ações envolvendo o DOM.
+ */
 import Inputmask from "inputmask";
 const Veiculo = require('./Veiculo');
 const Patio = require('./Patio');
 const FormatData = require('./FormatData');
+const calcularTempo = require('./CalcularTempo');
 
 
 
@@ -16,7 +20,6 @@ module.exports = class Tela {
 
     static preencherListaPatio() {
         let lista = Patio.getListaPatio();
-        console.log({ lista });
         for (let i = 0; i < lista.length; i++) {
             let tr = Tela.getTr([lista[i].veiculo.nome, lista[i].veiculo.placa, FormatData(lista[i].dh_entrada)]);
             window.document.querySelector('#lista_patio tbody').append(tr);
@@ -42,14 +45,36 @@ module.exports = class Tela {
     }
 
     static removeVeiculo(event) {
-        console.log('REMOVE');
+        let tr = event.target.parentElement.parentElement;
+        let placa = tr.children[1].innerHTML;
+        if (confirm('Deseja confirmar a saída do veículo ' + placa + '?')) {
+            let saiu = Patio.sair(placa);
+            let ar_tempo = calcularTempo(saiu.dh_entrada);
+            tr.remove();
+            alert(`O veículo de placa ${placa}, saiu do pátio e permaneceu por ${ar_tempo[0]} horas, ${ar_tempo[1]} minutos e ${ar_tempo[2]} segundos.`);
+        }
     }
 
     static adicionaVeiculo(event) {
         event.preventDefault();
 
-        let placa = window.document.getElementById('placa') as HTMLInputElement;
         let nome = window.document.getElementById('nome') as HTMLInputElement;
+        if (nome.value === '') {
+            alert('Informe o nome do veículo');
+            nome.focus();
+            return;
+        }
+        let placa = window.document.getElementById('placa') as HTMLInputElement;
+        if (placa.value === '') {
+            alert('Informe a placa do veículo');
+            placa.focus();
+            return;
+        }
+        if (placa.value.replace(/_/g, '').length !== 8) {
+            alert('Informe uma placa válida');
+            placa.focus();
+            return;
+        }
         let veiculo = new Veiculo(nome.value, placa.value);
         let veiculo_entrou = Patio.entrar(veiculo);
         Tela.atualizarPatio(veiculo_entrou);
@@ -57,6 +82,8 @@ module.exports = class Tela {
         Tela.monitoraBotaoSair()
 
     }
+
+
 
     static resetForm() {
         (<HTMLInputElement>window.document.getElementById('placa')).value = '';
